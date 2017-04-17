@@ -24,7 +24,7 @@ public class HelloController {
         return message;
     }
 
-    @RequestMapping(value = "/hello/{message}")
+    @RequestMapping(value = "/hello/{message}", method = RequestMethod.PUT)
     @ResponseBody
     public String helloURI(@PathVariable String message)
     {
