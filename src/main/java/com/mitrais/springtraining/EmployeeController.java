@@ -18,11 +18,11 @@ public class EmployeeController {
 
     public EmployeeController()
     {
-        employeeList.add(new Employee("John", "male"));
-        employeeList.add(new Employee("Mary", "female"));
-        employeeList.add(new Employee("Adam", "male"));
-        employeeList.add(new Employee("Eve", "female"));
-        employeeList.add(new Employee("Dan", "male"));
+        employeeList.add(new Employee(1, "John", "male"));
+        employeeList.add(new Employee(2, "Mary", "female"));
+        employeeList.add(new Employee(3, "Adam", "male"));
+        employeeList.add(new Employee(4, "Eve", "female"));
+        employeeList.add(new Employee(5, "Dan", "male"));
     }
 
     @RequestMapping (value = "/employees", method = RequestMethod.GET)
@@ -40,12 +40,28 @@ public class EmployeeController {
         return result;
     }
 
+    @RequestMapping(value = "/employees/{id}")
+    @ResponseBody
+    public Employee getEmployeeById(@PathVariable int id)
+    {
+        for (Employee e:employeeList)
+        {
+            if (e.getId() == id)
+                return e;
+        }
+
+        //Throw an error if no employee is found.
+        throw new EmployeeNotFoundException();
+    }
+
     @RequestMapping(value = "/employees", method = RequestMethod.POST)
     @ResponseBody
-    public Employee addEmployee(@RequestBody Employee body)
+    //It seems that as long as you have a default constructor and appropriate setters for each property, you can
+    //automatically convert JSON string to objects.
+    public Employee addEmployee(@RequestBody Employee newEmployee)
     {
-        employeeList.add(body);
-        return body;
+        employeeList.add(newEmployee);
+        return newEmployee;
     }
 
 }

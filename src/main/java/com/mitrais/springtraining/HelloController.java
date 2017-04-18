@@ -1,6 +1,7 @@
 package com.mitrais.springtraining;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,6 +30,15 @@ public class HelloController {
     public String helloURI(@PathVariable String message)
     {
         return message;
+    }
+
+    @RequestMapping(value = "/hello-jsp", method = RequestMethod.GET)
+    //If you're using JSP files, no need to use @ResponseBody annotation!
+    public String hello(ModelMap modelMap)
+    {
+        modelMap.addAttribute("message", "Hello Spring from JSP.");
+        //The application will search for hello.jsp.
+        return "hello";
     }
 
 }
